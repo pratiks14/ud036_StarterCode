@@ -12,18 +12,23 @@ main_page_head = '''
     <title>Fresh Tomatoes!</title>
 
     <!-- Bootstrap 3 -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">  # NOQA
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css"> # NOQA
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js">  # NOQA
+    </script>
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
+            background-color:#000;
+            color:#ffe;
+            background-image: url("img/blue.jpg");
+            background-size: cover;
         }
         #trailer .modal-dialog {
             margin-top: 200px;
-            width: 640px;
-            height: 480px;
+            width: 1040px;
+            height: 680px;
         }
         .hanging-close {
             position: absolute;
@@ -40,7 +45,7 @@ main_page_head = '''
             padding-top: 20px;
         }
         .movie-tile:hover {
-            background-color: #EEE;
+            background-color: #EDE;
             cursor: pointer;
         }
         .scale-media {
@@ -54,7 +59,7 @@ main_page_head = '''
             width: 100%;
             left: 0;
             top: 0;
-            background-color: white;
+            background-color: black;
         }
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -93,8 +98,9 @@ main_page_content = '''
     <div class="modal" id="trailer">
       <div class="modal-dialog">
         <div class="modal-content">
-          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          <a href="#" class="hanging-close" data-dismiss="modal"
+          aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>  # NOQA
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
@@ -105,10 +111,8 @@ main_page_content = '''
     <!-- Main Page Content -->
     <div class="container">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
-          </div>
+        <div  class="col-md-1 col-lg-12 text-center">
+            <h2>FRESH TOMATOES MOVIE TRAILERS</h2>
         </div>
       </div>
     </div>
@@ -119,16 +123,25 @@ main_page_content = '''
 </html>
 '''
 
+# additional content
+center_content = '''
+<div class="col-md-1 col-lg-12 text-center">
+    <h2>Click To Watch Trailer</h2>
+</div>
+'''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center"
+    data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal"
+    data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h2>{movie_title}</h2>
 </div>
 '''
 
 
+# this function creates the movie tiles
 def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''
@@ -150,16 +163,17 @@ def create_movie_tiles_content(movies):
     return content
 
 
+# fuction creates a html file and writes into it the  content
 def open_movies_page(movies):
     # Create or overwrite the output file
     output_file = open('fresh_tomatoes.html', 'w')
 
     # Replace the movie tiles placeholder generated content
     rendered_content = main_page_content.format(
-        movie_tiles=create_movie_tiles_content(movies))
+                        movie_tiles=create_movie_tiles_content(movies))
 
     # Output the file
-    output_file.write(main_page_head + rendered_content)
+    output_file.write(main_page_head + center_content + rendered_content)
     output_file.close()
 
     # open the output file in the browser (in a new tab, if possible)
